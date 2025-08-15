@@ -1,15 +1,87 @@
 "use client"
 
-import React from "react"
+import React, { useState, useEffect, useRef } from "react"
 import Image from "next/image"
 
-// Simple typewriter effect component (self-contained)
-const TypewriterEffect = ({ words }) => {
-  const [currentWordIndex, setCurrentWordIndex] = React.useState(0)
-  const [currentText, setCurrentText] = React.useState("")
-  const [isDeleting, setIsDeleting] = React.useState(false)
+// --- TYPE DEFINITIONS ---
 
-  React.useEffect(() => {
+interface Word {
+  text: string
+}
+
+interface TypewriterProps {
+  words: Word[]
+}
+
+interface Program {
+  id: number
+  title: string
+  description: string
+  features: string[]
+  duration: string
+  level: string
+  gradient: string
+  accentColor: string
+  borderColor: string
+}
+
+interface TeamMember {
+  name: string
+  role: string
+  description: string
+}
+
+// --- CUSTOM HOOK (with types and moved outside component) ---
+
+/**
+ * A custom hook to detect when an element is in the viewport.
+ * @param options - IntersectionObserver options.
+ * @returns A tuple containing the ref to attach to the element and a boolean indicating if it's in view.
+ */
+const useInView = <T extends Element>(
+  options: IntersectionObserverInit = {},
+): [React.RefObject<T>, boolean] => {
+  const ref = useRef<T>(null)
+  const [inView, setInView] = useState(false)
+
+  useEffect(() => {
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        // Only set to true, don't set back to false on exit
+        if (entry.isIntersecting) {
+          setInView(true)
+          // Disconnect after it's in view to prevent re-triggering
+          if (ref.current) {
+            observer.unobserve(ref.current)
+          }
+        }
+      },
+      { threshold: 0.1, ...options },
+    )
+
+    const currentRef = ref.current
+    if (currentRef) {
+      observer.observe(currentRef)
+    }
+
+    return () => {
+      if (currentRef) {
+        observer.unobserve(currentRef)
+      }
+    }
+  }, [options]) // ref is stable, no need to include in dependency array
+
+  return [ref as React.RefObject<T>, inView]
+}
+
+// --- TYPEWRITER COMPONENT (with types) ---
+
+const TypewriterEffect: React.FC<TypewriterProps> = ({ words }) => {
+  const [currentWordIndex, setCurrentWordIndex] = useState(0)
+  const [currentText, setCurrentText] = useState("")
+  const [isDeleting, setIsDeleting] = useState(false)
+
+  useEffect(() => {
     const currentWord = words[currentWordIndex]?.text || ""
 
     const timeout = setTimeout(
@@ -18,7 +90,8 @@ const TypewriterEffect = ({ words }) => {
           if (currentText !== currentWord) {
             setCurrentText(currentWord.slice(0, currentText.length + 1))
           } else {
-            setTimeout(() => setIsDeleting(true), 1000)
+            // Wait before starting to delete
+            setTimeout(() => setIsDeleting(true), 1500)
           }
         } else {
           if (currentText !== "") {
@@ -43,33 +116,12 @@ const TypewriterEffect = ({ words }) => {
   )
 }
 
-export default function InfoSection() {
-  // Intersection Observer hook for animations
-  const useInView = (options = {}) => {
-    const ref = React.useRef()
-    const [inView, setInView] = React.useState(false)
+// --- MAIN COMPONENT ---
 
-    React.useEffect(() => {
-      const observer = new IntersectionObserver(
-        ([entry]) => {
-          if (entry.isIntersecting) {
-            setInView(true)
-          }
-        },
-        { threshold: 0.1, ...options },
-      )
+export default function InfoSection(): React.ReactElement {
+  const titleWords: Word[] = [{ text: "About" }, { text: "Us" }, { text: "&" }, { text: "Our" }, { text: "Programs" }]
 
-      if (ref.current) observer.observe(ref.current)
-      return () => observer.disconnect()
-    }, [])
-
-    return [ref, inView]
-  }
-
-  // Title words for typewriter effect
-  const titleWords = [{ text: "About" }, { text: "Us" }, { text: "&" }, { text: "Our" }, { text: "Programs" }]
-
-  const programs = [
+  const programs: Program[] = [
     {
       id: 1,
       title: "Global Leadership Excellence",
@@ -120,14 +172,14 @@ export default function InfoSection() {
     },
   ]
 
-  // Refs for animations
-  const [titleRef, titleInView] = useInView()
-  const [bennettRef, bennettInView] = useInView()
-  const [oiaRef, oiaInView] = useInView()
-  const [iasRef, iasInView] = useInView()
-  const [teamRef, teamInView] = useInView()
-  const [glimpseRef, glimpseInView] = useInView()
-  const [programsRef, programsInView] = useInView()
+  // Refs for animations with specified element types
+  const [titleRef, titleInView] = useInView<HTMLDivElement>()
+  const [bennettRef, bennettInView] = useInView<HTMLElement>()
+  const [oiaRef, oiaInView] = useInView<HTMLElement>()
+  const [iasRef, iasInView] = useInView<HTMLElement>()
+  const [teamRef, teamInView] = useInView<HTMLElement>()
+  const [glimpseRef, glimpseInView] = useInView<HTMLElement>()
+  const [programsRef, programsInView] = useInView<HTMLElement>()
 
   return (
     <div className="container mx-auto px-4 font-['Sarpanch'] bg-black">
@@ -159,7 +211,7 @@ export default function InfoSection() {
           >
             <h2 className="text-3xl font-bold text-[#A41D33] mb-6 font-['Sarpanch']">Bennett University</h2>
             <p className="text-white mb-4 font-['Sarpanch']">
-              Bennett University is a premier educational institution established by the Times Group, India's largest
+              Bennett University is a premier educational institution established by the Times Group, India&apos;s largest
               media conglomerate. Founded with a vision to provide Ivy League quality education, the university is
               located in Greater Noida, near Delhi NCR.
             </p>
@@ -196,11 +248,11 @@ export default function InfoSection() {
             </p>
             <p className="text-white mb-4 font-['Sarpanch']">
               Through strategic alliances with universities across the globe, OIA enables students to gain international
-              exposure, cultural understanding, and a global perspective that is essential in today's interconnected
+              exposure, cultural understanding, and a global perspective that is essential in today&apos;s interconnected
               world.
             </p>
             <p className="text-white font-['Sarpanch']">
-              OIA's mission is to foster a globally engaged campus community and to position Bennett University as a hub
+              OIA&apos;s mission is to foster a globally engaged campus community and to position Bennett University as a hub
               for international academic collaboration and innovation.
             </p>
           </div>
@@ -261,7 +313,7 @@ export default function InfoSection() {
         {/* Top 3 cards */}
         <div className="grid md:grid-cols-3 gap-8 mb-8">
           {[1, 2, 3].map((num, index) => {
-            const teamMembers = [
+            const teamMembers: TeamMember[] = [
               {
                 name: "Dr. Sarah Chen",
                 role: "Director, Office of International Affairs",
@@ -281,6 +333,7 @@ export default function InfoSection() {
                   "A passionate advocate for international relations, Ariya leads student initiatives and represents Bennett University at global forums and conferences.",
               },
             ]
+            const member = teamMembers[index]
 
             return (
               <div
@@ -291,22 +344,20 @@ export default function InfoSection() {
                 <div className="relative h-72 overflow-hidden">
                   <Image
                     src={`/team-member-${num}.jpg`}
-                    alt={`${teamMembers[index].name} - ${teamMembers[index].role}`}
+                    alt={`${member.name} - ${member.role}`}
                     fill
                     className="object-cover transition-transform duration-700 group-hover:scale-110"
                   />
                   <div className="absolute inset-0 bg-gradient-to-t from-black/90 via-black/20 to-transparent"></div>
                   <div className="absolute bottom-4 left-4 right-4">
                     <h3 className="text-xl font-bold text-white mb-1 font-['Sarpanch'] drop-shadow-lg">
-                      {teamMembers[index].name}
+                      {member.name}
                     </h3>
-                    <p className="text-[#04509D] text-sm font-semibold font-['Sarpanch']">{teamMembers[index].role}</p>
+                    <p className="text-[#04509D] text-sm font-semibold font-['Sarpanch']">{member.role}</p>
                   </div>
                 </div>
                 <div className="p-6 bg-gradient-to-br from-gray-900/80 to-black/60">
-                  <p className="text-gray-300 text-sm leading-relaxed font-['Sarpanch']">
-                    {teamMembers[index].description}
-                  </p>
+                  <p className="text-gray-300 text-sm leading-relaxed font-['Sarpanch']">{member.description}</p>
                 </div>
               </div>
             )
@@ -317,7 +368,7 @@ export default function InfoSection() {
         <div className="flex justify-center">
           <div className="grid md:grid-cols-2 gap-8 max-w-4xl">
             {[4, 5].map((num, index) => {
-              const teamMembers = [
+              const teamMembers: TeamMember[] = [
                 {
                   name: "James Thompson",
                   role: "Research Coordinator",
@@ -331,6 +382,7 @@ export default function InfoSection() {
                     "Priya manages student communications and organizes cultural exchange events, building bridges between international and domestic students.",
                 },
               ]
+              const member = teamMembers[index]
 
               return (
                 <div
@@ -341,24 +393,20 @@ export default function InfoSection() {
                   <div className="relative h-72 overflow-hidden">
                     <Image
                       src={`/team-member-${num}.jpg`}
-                      alt={`${teamMembers[index].name} - ${teamMembers[index].role}`}
+                      alt={`${member.name} - ${member.role}`}
                       fill
                       className="object-cover transition-transform duration-700 group-hover:scale-110"
                     />
                     <div className="absolute inset-0 bg-gradient-to-t from-black/90 via-black/20 to-transparent"></div>
                     <div className="absolute bottom-4 left-4 right-4">
                       <h3 className="text-xl font-bold text-white mb-1 font-['Sarpanch'] drop-shadow-lg">
-                        {teamMembers[index].name}
+                        {member.name}
                       </h3>
-                      <p className="text-[#04509D] text-sm font-semibold font-['Sarpanch']">
-                        {teamMembers[index].role}
-                      </p>
+                      <p className="text-[#04509D] text-sm font-semibold font-['Sarpanch']">{member.role}</p>
                     </div>
                   </div>
                   <div className="p-6 bg-gradient-to-br from-gray-900/80 to-black/60">
-                    <p className="text-gray-300 text-sm leading-relaxed font-['Sarpanch']">
-                      {teamMembers[index].description}
-                    </p>
+                    <p className="text-gray-300 text-sm leading-relaxed font-['Sarpanch']">{member.description}</p>
                   </div>
                 </div>
               )
@@ -412,7 +460,7 @@ export default function InfoSection() {
           <p
             className={`text-xl text-gray-400 font-light max-w-2xl mx-auto leading-relaxed font-['Sarpanch'] transition-all duration-1000 delay-200 ${programsInView ? "opacity-100 translate-y-0" : "opacity-0 translate-y-5"}`}
           >
-            Designed for tomorrow's leaders. Crafted for exceptional minds.
+            Designed for tomorrow&apos;s leaders. Crafted for exceptional minds.
           </p>
         </div>
 

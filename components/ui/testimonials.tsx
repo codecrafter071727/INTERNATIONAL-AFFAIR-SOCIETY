@@ -51,7 +51,7 @@ export default function Testimonials() {
               <div className="absolute top-0 right-0 w-20 h-20 text-[#A41D33]/10">
                 <QuoteIcon className="h-20 w-20" />
               </div>
-              <p className="text-gray-600 mb-8 relative z-10">"{testimonial.quote}"</p>
+              <p className="text-gray-600 mb-8 relative z-10">&ldquo;{testimonial.quote}&rdquo;</p>
               <div className="flex items-center">
                 <div className="mr-4">
                   <Image
