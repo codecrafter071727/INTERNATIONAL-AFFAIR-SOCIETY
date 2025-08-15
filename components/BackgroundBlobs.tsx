@@ -44,11 +44,11 @@ export default function BackgroundBlobs({ count = 5, className = "" }: Backgroun
     setIsMounted(true);
   }, [count]);
 
-  // Don't render anything until mounted to avoid hydration mismatch
+  // Don't render blobs until mounted to avoid hydration mismatch
   if (!isMounted) {
     return (
       <div className={`fixed inset-0 overflow-hidden pointer-events-none ${className}`}>
-        {/* Empty div to maintain layout */}
+        {/* Empty container to maintain layout */}
       </div>
     );
   }

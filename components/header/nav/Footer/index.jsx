@@ -41,6 +41,14 @@ export default function Footer() {
                     initial="initial" 
                     animate="enter" 
                     exit="exit">
+                    <span>Made by:</span>OIA Tech X OIA Design
+                </motion.li>
+                <motion.li 
+                    custom={[0.3, 0]} 
+                    variants={translate} 
+                    initial="initial" 
+                    animate="enter" 
+                    exit="exit">
                     <a href="https://instagram.com" target="_blank" rel="noopener noreferrer">Instagram</a>
                 </motion.li>
             </ul>

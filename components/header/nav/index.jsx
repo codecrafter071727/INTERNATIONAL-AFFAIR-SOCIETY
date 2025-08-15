@@ -13,7 +13,7 @@ const links = [
     { title: "VISITS", href: "/visits", src: "visits.png" },
     { title: "Teams", href: "/teams", src: "teams.png" },
     { title: "Contact", href: "/contact", src: "contact.png" },
-    { title: "IRCO", href: "/irco", src: "irco.png" }
+    { title: "OIA", href: "/oia", src: "oia.png" }
 ];
 
 export default function Nav({ closeNav }) { // Accept closeNav prop

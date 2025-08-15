@@ -1,36 +1,55 @@
-"use client"; // Add this directive at the top of the file
-
-// Remove unused Link import or use it in your component
-// If you're not using Link, remove it from imports
-import React, { useState, useEffect } from 'react';
-
+"use client";
+import React, { useState, useEffect, useCallback } from 'react';
 import { cn } from '@/app/lib/utils';
 
 const Header = () => {
   const [scrolled, setScrolled] = useState(false);
-  
-  useEffect(() => {
-    const handleScroll = () => {
-      const isScrolled = window.scrollY > 50;
-      if (isScrolled !== scrolled) {
-        setScrolled(isScrolled);
-      }
-    };
 
-    window.addEventListener('scroll', handleScroll);
+  const handleScroll = useCallback(() => {
+    const isScrolled = window.scrollY > 50;
+    setScrolled(isScrolled);
+  }, []);
+
+  useEffect(() => {
+    // Check initial scroll position
+    handleScroll();
+    
+    window.addEventListener('scroll', handleScroll, { passive: true });
+    
     return () => {
       window.removeEventListener('scroll', handleScroll);
     };
-  }, [scrolled]);
+  }, [handleScroll]);
 
   return (
-    <header 
+    <header
       className={cn(
-        "fixed top-15 left-0 right-0 z-50 transition-all duration-300 px-6 md:px-12", 
-        scrolled ? "py-2" : "py-6"
+        "fixed top-0 left-0 right-0 z-50 transition-all duration-300 px-6 md:px-12",
+        scrolled 
+          ? "py-2 bg-white/80 backdrop-blur-md border-b border-gray-200/20 shadow-sm" 
+          : "py-6 bg-transparent"
       )}
     >
-     
+      {/* Add your header content here */}
+      <div className="max-w-7xl mx-auto flex items-center justify-between">
+        <div className="text-xl font-bold">
+          Your Logo
+        </div>
+        <nav className="hidden md:flex items-center space-x-6">
+          <a href="#" className="text-gray-600 hover:text-gray-900 transition-colors">
+            Home
+          </a>
+          <a href="#" className="text-gray-600 hover:text-gray-900 transition-colors">
+            About
+          </a>
+          <a href="#" className="text-gray-600 hover:text-gray-900 transition-colors">
+            Services
+          </a>
+          <a href="#" className="text-gray-600 hover:text-gray-900 transition-colors">
+            Contact
+          </a>
+        </nav>
+      </div>
     </header>
   );
 };

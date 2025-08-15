@@ -261,8 +261,7 @@ const Hero = () => {
     { text: "International" },
     { text: "Affairs" },
     { text: "Society" },
-    { text: "by" },
-    { text: "IRCO." },
+    
   ];
 
   return (
@@ -283,7 +282,7 @@ const Hero = () => {
         {/* Center text with responsive font size - moved down with padding/margin */}
         <div className="flex items-center justify-center">
           <div className="text-white md:text-5xl text-3xl tracking-wider text-center font-['TAN-Pearl']">
-            IRCO | IAS
+          Office Of International Affairs Society
           </div>
         </div>
       </div>

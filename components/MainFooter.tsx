@@ -15,10 +15,9 @@ export default function MainFooter() {
         <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
           {/* Logo and description */}
           <div>
-            <h2 className="text-2xl font-['TAN-Pearl'] mb-3">IRCO | IAS</h2>
+            <h2 className="text-2xl font-['TAN-Pearl'] mb-3">OIA</h2>
             <p className="text-gray-300 mb-4 max-w-md text-sm">
-              Empowering future leaders through comprehensive education and training programs
-              designed to excel in administrative services.
+              Empowering global leaders through comprehensive international education and fostering cross-cultural collaboration and understanding.
             </p>
             <div className="flex space-x-4">
               <a href="#" className="text-white hover:text-gray-300">
@@ -61,7 +60,7 @@ export default function MainFooter() {
                 <svg className="w-4 h-4 mt-0.5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"></path>
                 </svg>
-                <span className="text-gray-300">info@ircoias.com</span>
+                <span className="text-gray-300">info@oia.com</span>
               </li>
               <li className="flex items-start">
                 <svg className="w-4 h-4 mt-0.5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">

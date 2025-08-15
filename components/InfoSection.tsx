@@ -100,7 +100,7 @@ export default function InfoSection() {
         </div>
       </motion.section>
       
-      {/* Testimonial Section */}
+      {/* IRCO Section -> About OIA Section */}
       <motion.section 
         className="mb-24"
         initial="hidden"
@@ -108,34 +108,31 @@ export default function InfoSection() {
         viewport={{ once: true, amount: 0.3 }}
         variants={fadeIn}
       >
-        <div className="bg-gradient-to-r from-gray-900 to-gray-800 rounded-xl p-8 md:p-12">
-          <div className="flex flex-col items-center text-center">
-            <div className="w-24 h-24 rounded-full overflow-hidden mb-6 relative">
-              <Image 
-                src="/abhay-bhansal.jpg" 
-                alt="Abhay Bhansal" 
-                fill
-                className="object-cover"
-              />
-            </div>
-            <h3 className="text-2xl font-bold text-white mb-4 font-['Sarpanch']">Abhay Bhansal</h3>
-            <p className="text-gray-400 mb-2 font-['Sarpanch']">Director, International Relations</p>
-            <div className="w-16 h-0.5 bg-blue-500 mb-6"></div>
-            <p className="text-gray-300 italic text-lg mb-6 font-['Sarpanch']">
-              "At Bennett University, we believe in providing our students with a truly global education. Through our international partnerships and exchange programs, we are creating future leaders who understand the complexities of our interconnected world and are equipped to address global challenges with innovative solutions."
+        <div className="flex flex-col md:flex-row-reverse items-center gap-8">
+          <div className="md:w-1/2">
+            <h2 className="text-3xl font-bold text-white mb-6 font-['Sarpanch']">About OIA</h2>
+            <p className="text-gray-300 mb-4 font-['Sarpanch']">
+              The Office of International Affairs (OIA) at Bennett University serves as the gateway to global opportunities for students and faculty. OIA facilitates international partnerships, exchange programs, and collaborative research initiatives with prestigious institutions worldwide.
             </p>
-            <div className="flex space-x-2">
-              <span className="text-yellow-400">★</span>
-              <span className="text-yellow-400">★</span>
-              <span className="text-yellow-400">★</span>
-              <span className="text-yellow-400">★</span>
-              <span className="text-yellow-400">★</span>
-            </div>
+            <p className="text-gray-300 mb-4 font-['Sarpanch']">
+              Through strategic alliances with universities across the globe, OIA enables students to gain international exposure, cultural understanding, and a global perspective that is essential in today's interconnected world.
+            </p>
+            <p className="text-gray-300 font-['Sarpanch']">
+              OIA's mission is to foster a globally engaged campus community and to position Bennett University as a hub for international academic collaboration and innovation.
+            </p>
+          </div>
+          <div className="md:w-1/2 relative h-[300px] md:h-[400px] rounded-lg overflow-hidden">
+            <Image 
+              src="/irco-office.jpg" 
+              alt="OIA Office" 
+              fill
+              className="object-cover"
+            />
           </div>
         </div>
       </motion.section>
-      
-      {/* IAS About Section */}
+
+      {/* IAS Section -> International Affairs Society under OIA */}
       <motion.section 
         className="mb-24"
         initial="hidden"
@@ -145,9 +142,9 @@ export default function InfoSection() {
       >
         <div className="flex flex-col md:flex-row items-center gap-8">
           <div className="md:w-1/2">
-            <h2 className="text-3xl font-bold text-white mb-6 font-['Sarpanch']">International Affairs Society</h2>
+            <h2 className="text-3xl font-bold text-white mb-6 font-['Sarpanch']">International Affairs Society under OIA</h2>
             <p className="text-gray-300 mb-4 font-['Sarpanch']">
-              The International Affairs Society (IAS) is a student-led organization at Bennett University that serves as a platform for students interested in global politics, diplomacy, and international relations. Founded with the vision to foster a deeper understanding of world affairs, IAS organizes various activities including debates, model United Nations conferences, guest lectures, and workshops.
+              The International Affairs Society (IAS) is a student-led organization under the Office of International Affairs (OIA) at Bennett University that serves as a platform for students interested in global politics, diplomacy, and international relations.
             </p>
             <p className="text-gray-300 mb-4 font-['Sarpanch']">
               IAS members engage in discussions on current global issues, policy analysis, and diplomatic simulations that enhance their critical thinking, public speaking, and leadership skills. The society also publishes research papers and newsletters on international affairs.
@@ -159,15 +156,15 @@ export default function InfoSection() {
           <div className="md:w-1/2 relative h-[300px] md:h-[400px] rounded-lg overflow-hidden">
             <Image 
               src="/ias-team.jpg" 
-              alt="IAS Team" 
+              alt="OIA Team" 
               fill
               className="object-cover"
             />
           </div>
         </div>
       </motion.section>
-      
-      {/* Glimpse Gallery */}
+
+      {/* Update event labels in Glimpse Gallery */}
       <motion.section 
         className="mb-24"
         initial="hidden"
@@ -186,7 +183,7 @@ export default function InfoSection() {
                 className="object-cover transition-transform duration-500 group-hover:scale-110"
               />
               <div className="absolute inset-0 bg-gradient-to-t from-black/70 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-end">
-                <p className="text-white p-4 text-sm font-['Sarpanch']">IAS Event {num}</p>
+                <p className="text-white p-4 text-sm font-['Sarpanch']">OIA Event {num}</p>
               </div>
             </div>
           ))}
