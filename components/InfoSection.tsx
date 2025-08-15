@@ -200,7 +200,7 @@ export default function InfoSection() {
         <h2 className="text-3xl font-bold text-white mb-8 text-center font-['Sarpanch']">Programs For You</h2>
         <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
           {/* Program Card 1 */}
-          <div className="bg-gradient-to-br from-gray-900 to-gray-800 rounded-xl overflow-hidden transition-transform hover:scale-105 duration-300">
+          <div className="bg-gradient-to-br from-black to-gray-900 border border-[#A41D33] rounded-xl overflow-hidden transition-transform hover:scale-105 duration-300 hover:border-[#04509D]">
             <div className="relative h-48">
               <Image 
                 src="/program-1.jpg" 
@@ -211,15 +211,15 @@ export default function InfoSection() {
             </div>
             <div className="p-6">
               <h3 className="text-xl font-bold text-white mb-2 font-['Sarpanch']">Global Leadership Program</h3>
-              <p className="text-gray-400 mb-4 font-['Sarpanch']">A comprehensive program designed to develop leadership skills in an international context.</p>
-              <Link href="/programs/global-leadership" className="inline-block bg-blue-600 text-white px-4 py-2 rounded-md hover:bg-blue-700 transition-colors font-['Sarpanch']">
+              <p className="text-gray-300 mb-4 font-['Sarpanch']">A comprehensive program designed to develop leadership skills in an international context.</p>
+              <Link href="/programs/global-leadership" className="inline-block bg-[#A41D33] text-white px-4 py-2 rounded-md hover:bg-[#04509D] transition-colors font-['Sarpanch']">
                 Learn More
               </Link>
             </div>
           </div>
           
           {/* Program Card 2 */}
-          <div className="bg-gradient-to-br from-gray-900 to-gray-800 rounded-xl overflow-hidden transition-transform hover:scale-105 duration-300">
+          <div className="bg-gradient-to-br from-black to-gray-900 border border-[#04509D] rounded-xl overflow-hidden transition-transform hover:scale-105 duration-300 hover:border-[#A41D33]">
             <div className="relative h-48">
               <Image 
                 src="/program-2.jpg" 
@@ -230,15 +230,15 @@ export default function InfoSection() {
             </div>
             <div className="p-6">
               <h3 className="text-xl font-bold text-white mb-2 font-['Sarpanch']">Diplomatic Studies</h3>
-              <p className="text-gray-400 mb-4 font-['Sarpanch']">An intensive course on diplomatic protocols, international negotiations, and conflict resolution.</p>
-              <Link href="/programs/diplomatic-studies" className="inline-block bg-blue-600 text-white px-4 py-2 rounded-md hover:bg-blue-700 transition-colors font-['Sarpanch']">
+              <p className="text-gray-300 mb-4 font-['Sarpanch']">An intensive course on diplomatic protocols, international negotiations, and conflict resolution.</p>
+              <Link href="/programs/diplomatic-studies" className="inline-block bg-[#04509D] text-white px-4 py-2 rounded-md hover:bg-[#A41D33] transition-colors font-['Sarpanch']">
                 Learn More
               </Link>
             </div>
           </div>
           
           {/* Program Card 3 */}
-          <div className="bg-gradient-to-br from-gray-900 to-gray-800 rounded-xl overflow-hidden transition-transform hover:scale-105 duration-300">
+          <div className="bg-gradient-to-br from-black to-gray-900 border border-[#A41D33] rounded-xl overflow-hidden transition-transform hover:scale-105 duration-300 hover:border-[#04509D]">
             <div className="relative h-48">
               <Image 
                 src="/program-3.jpg" 
@@ -249,8 +249,8 @@ export default function InfoSection() {
             </div>
             <div className="p-6">
               <h3 className="text-xl font-bold text-white mb-2 font-['Sarpanch']">International Policy Workshop</h3>
-              <p className="text-gray-400 mb-4 font-['Sarpanch']">A hands-on workshop on policy formulation, analysis, and implementation in global contexts.</p>
-              <Link href="/programs/policy-workshop" className="inline-block bg-blue-600 text-white px-4 py-2 rounded-md hover:bg-blue-700 transition-colors font-['Sarpanch']">
+              <p className="text-gray-300 mb-4 font-['Sarpanch']">A hands-on workshop on policy formulation, analysis, and implementation in global contexts.</p>
+              <Link href="/programs/policy-workshop" className="inline-block bg-[#A41D33] text-white px-4 py-2 rounded-md hover:bg-[#04509D] transition-colors font-['Sarpanch']">
                 Learn More
               </Link>
             </div>
@@ -258,7 +258,7 @@ export default function InfoSection() {
         </div>
         
         <div className="text-center mt-12">
-          <Link href="/programs" className="inline-block bg-gradient-to-r from-blue-600 to-purple-600 text-white px-8 py-3 rounded-md hover:from-blue-700 hover:to-purple-700 transition-colors font-['Sarpanch']">
+          <Link href="/programs" className="inline-block bg-gradient-to-r from-[#A41D33] to-[#04509D] text-white px-8 py-3 rounded-md hover:from-[#04509D] hover:to-[#A41D33] transition-colors font-['Sarpanch']">
             View All Programs
           </Link>
         </div>
