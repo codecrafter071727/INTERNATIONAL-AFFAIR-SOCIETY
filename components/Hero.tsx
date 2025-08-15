@@ -259,8 +259,8 @@ const Hero = () => {
     { text: "We" },
     { text: "are" },
     { text: "International" },
-    { text: "Affairs" },
-    { text: "Society" },
+    { text: "Relations" },
+    { text: "& Affairs" },
     
   ];
 
@@ -278,11 +278,11 @@ const Hero = () => {
           visibility: hidden !important;
         }
       `}</style>
-        <div className="max-w-7xl mx-auto pt-12 mt-6">
+        <div className="max-w-7xl mx-auto pt-12 mt-18">
         {/* Center text with responsive font size - moved down with padding/margin */}
         <div className="flex items-center justify-center">
           <div className="text-white md:text-5xl text-3xl tracking-wider text-center font-['TAN-Pearl']">
-          Office Of International Affairs Society
+          Office Of International Affairs 
           </div>
         </div>
       </div>
@@ -345,7 +345,7 @@ const Hero = () => {
           {/* Left side description */}
           <div className="w-full md:w-1/2 text-left pr-8 z-20">
             <h2 className="text-4xl font-bold text-white mb-8 font-['Sarpanch']">
-              Our Global Network
+              Our Mission
             </h2>
             <p className="text-xl text-gray-200 mb-6 font-['Sarpanch']">
               Connecting thought leaders, policymakers, and researchers across
