@@ -2,6 +2,9 @@
 
 import React, { useState, useEffect, useRef } from "react"
 import Image from "next/image"
+import Link from "next/link"
+import { motion } from "framer-motion"
+
 
 // --- TYPE DEFINITIONS ---
 
@@ -13,17 +16,6 @@ interface TypewriterProps {
   words: Word[]
 }
 
-interface Program {
-  id: number
-  title: string
-  description: string
-  features: string[]
-  duration: string
-  level: string
-  gradient: string
-  accentColor: string
-  borderColor: string
-}
 
 interface TeamMember {
   name: string
@@ -38,6 +30,12 @@ interface TeamMember {
  * @param options - IntersectionObserver options.
  * @returns A tuple containing the ref to attach to the element and a boolean indicating if it's in view.
  */
+// Add this after your type definitions and before the useInView hook
+const fadeIn = {
+  hidden: { opacity: 0, y: 20 },
+  visible: { opacity: 1, y: 0, transition: { duration: 0.6 } }
+}
+
 const useInView = <T extends Element>(
   options: IntersectionObserverInit = {},
 ): [React.RefObject<T>, boolean] => {
@@ -76,7 +74,10 @@ const useInView = <T extends Element>(
 
 // --- TYPEWRITER COMPONENT (with types) ---
 
-const TypewriterEffect: React.FC<TypewriterProps> = ({ words }) => {
+import dynamic from 'next/dynamic'
+
+// Dynamically import TypewriterEffect with SSR disabled
+const TypewriterEffect = dynamic(() => Promise.resolve(({ words }: TypewriterProps) => {
   const [currentWordIndex, setCurrentWordIndex] = useState(0)
   const [currentText, setCurrentText] = useState("")
   const [isDeleting, setIsDeleting] = useState(false)
@@ -90,7 +91,6 @@ const TypewriterEffect: React.FC<TypewriterProps> = ({ words }) => {
           if (currentText !== currentWord) {
             setCurrentText(currentWord.slice(0, currentText.length + 1))
           } else {
-            // Wait before starting to delete
             setTimeout(() => setIsDeleting(true), 1500)
           }
         } else {
@@ -114,63 +114,13 @@ const TypewriterEffect: React.FC<TypewriterProps> = ({ words }) => {
       <span className="animate-pulse">|</span>
     </span>
   )
-}
+}), { ssr: false })
 
 // --- MAIN COMPONENT ---
 
 export default function InfoSection(): React.ReactElement {
   const titleWords: Word[] = [{ text: "About" }, { text: "Us" }, { text: "&" }, { text: "Our" }, { text: "Programs" }]
 
-  const programs: Program[] = [
-    {
-      id: 1,
-      title: "Global Leadership Excellence",
-      description:
-        "Transform into a world-class leader through immersive international experiences, executive mentorship, and strategic thinking workshops.",
-      features: ["Executive Coaching", "International Exposure", "Strategic Leadership"],
-      duration: "6 Months",
-      level: "Advanced",
-      gradient: "from-[#04509D]/20 to-[#A41D33]/20",
-      accentColor: "text-[#04509D]",
-      borderColor: "border-[#04509D]/30",
-    },
-    {
-      id: 2,
-      title: "Diplomatic Mastery Program",
-      description:
-        "Master the art of diplomacy with real-world simulations, protocol training, and direct engagement with diplomatic corps.",
-      features: ["UN Simulations", "Protocol Training", "Embassy Visits"],
-      duration: "4 Months",
-      level: "Professional",
-      gradient: "from-[#A41D33]/20 to-[#04509D]/20",
-      accentColor: "text-[#A41D33]",
-      borderColor: "border-[#A41D33]/30",
-    },
-    {
-      id: 3,
-      title: "International Policy Lab",
-      description:
-        "Shape global policies through hands-on research, policy drafting, and collaboration with international think tanks.",
-      features: ["Policy Research", "Think Tank Collaboration", "Publication Opportunities"],
-      duration: "8 Months",
-      level: "Research",
-      gradient: "from-[#04509D]/20 to-gray-800/20",
-      accentColor: "text-[#04509D]",
-      borderColor: "border-[#04509D]/30",
-    },
-    {
-      id: 4,
-      title: "Cross-Cultural Intelligence",
-      description:
-        "Develop deep cultural competency and global mindset through immersive cultural exchanges and anthropological studies.",
-      features: ["Cultural Immersion", "Language Training", "Global Networking"],
-      duration: "5 Months",
-      level: "Intermediate",
-      gradient: "from-[#A41D33]/20 to-gray-800/20",
-      accentColor: "text-[#A41D33]",
-      borderColor: "border-[#A41D33]/30",
-    },
-  ]
 
   // Refs for animations with specified element types
   const [titleRef, titleInView] = useInView<HTMLDivElement>()
@@ -416,7 +366,14 @@ export default function InfoSection(): React.ReactElement {
       </section>
 
       {/* Glimpse Gallery */}
-      <section ref={glimpseRef} className="mb-24">
+      <motion.section 
+        ref={glimpseRef} 
+        className="mb-24"
+        initial="hidden"
+        whileInView="visible"
+        viewport={{ once: true, amount: 0.3 }}
+        variants={fadeIn}
+      >
         <h2
           className={`text-3xl font-bold text-[#A41D33] mb-8 text-center font-['Sarpanch'] transition-all duration-1000 ${glimpseInView ? "opacity-100 translate-y-0" : "opacity-0 translate-y-10"}`}
         >
@@ -445,15 +402,24 @@ export default function InfoSection(): React.ReactElement {
       
       {/* Programs Section */}
       <motion.section 
+        ref={programsRef}
+        className="mb-24"
         initial="hidden"
         whileInView="visible"
         viewport={{ once: true, amount: 0.3 }}
         variants={fadeIn}
       >
-        <h2 className="text-3xl font-bold text-white mb-8 text-center font-['Sarpanch']">Programs For You</h2>
+        <h2
+          className={`text-3xl font-bold text-white mb-8 text-center font-['Sarpanch'] transition-all duration-1000 ${programsInView ? "opacity-100 translate-y-0" : "opacity-0 translate-y-10"}`}
+        >
+          Programs For You
+        </h2>
         <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
           {/* Program Card 1 */}
-          <div className="bg-gradient-to-br from-gray-900 to-gray-800 rounded-xl overflow-hidden transition-transform hover:scale-105 duration-300">
+          <div
+            className={`bg-gradient-to-br from-gray-900 to-gray-800 rounded-xl overflow-hidden transition-all duration-500 hover:scale-105 hover:shadow-lg ${programsInView ? "opacity-100 translate-y-0" : "opacity-0 translate-y-10"}`}
+            style={{ transitionDelay: "0ms" }}
+          >
             <div className="relative h-48">
               <Image 
                 src="/program-1.jpg" 
@@ -472,7 +438,10 @@ export default function InfoSection(): React.ReactElement {
           </div>
           
           {/* Program Card 2 */}
-          <div className="bg-gradient-to-br from-gray-900 to-gray-800 rounded-xl overflow-hidden transition-transform hover:scale-105 duration-300">
+          <div
+            className={`bg-gradient-to-br from-gray-900 to-gray-800 rounded-xl overflow-hidden transition-all duration-500 hover:scale-105 hover:shadow-lg ${programsInView ? "opacity-100 translate-y-0" : "opacity-0 translate-y-10"}`}
+            style={{ transitionDelay: "100ms" }}
+          >
             <div className="relative h-48">
               <Image 
                 src="/program-2.jpg" 
@@ -491,7 +460,10 @@ export default function InfoSection(): React.ReactElement {
           </div>
           
           {/* Program Card 3 */}
-          <div className="bg-gradient-to-br from-gray-900 to-gray-800 rounded-xl overflow-hidden transition-transform hover:scale-105 duration-300">
+          <div
+            className={`bg-gradient-to-br from-gray-900 to-gray-800 rounded-xl overflow-hidden transition-all duration-500 hover:scale-105 hover:shadow-lg ${programsInView ? "opacity-100 translate-y-0" : "opacity-0 translate-y-10"}`}
+            style={{ transitionDelay: "200ms" }}
+          >
             <div className="relative h-48">
               <Image 
                 src="/program-3.jpg" 
@@ -510,12 +482,14 @@ export default function InfoSection(): React.ReactElement {
           </div>
         </div>
         
-        <div className="text-center mt-12">
+        <div
+          className={`text-center mt-12 transition-all duration-1000 delay-300 ${programsInView ? "opacity-100 translate-y-0" : "opacity-0 translate-y-10"}`}
+        >
           <Link href="/programs" className="inline-block bg-gradient-to-r from-blue-600 to-purple-600 text-white px-8 py-3 rounded-md hover:from-blue-700 hover:to-purple-700 transition-colors font-['Sarpanch']">
             View All Programs
           </Link>
         </div>
-      </section>
+      </motion.section>
     </div>
   )
 }
